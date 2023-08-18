@@ -63,14 +63,7 @@ const PostLike: React.FC<PostLike> = ({
   );
 
   const mutation = useMutation(likePost, {
-    onSuccess: (data, variables) => {
-      // const newPost = displayedPosts?.find(
-      //   (post) => post.postId.toString() === variables
-      // );
-      // if (newPost) {
-      //   setLikedPosts((prev) => [...prev, newPost]);
-      // }
-    },
+    onSuccess: (data, variables) => {},
     onError: (error) => {
       console.error('Failed to like the post', error);
     },
@@ -78,13 +71,11 @@ const PostLike: React.FC<PostLike> = ({
 
   const handleLikeClick = (postId: number, isLiked: boolean) => {
     if (isLiked) {
-      // 좋아요 눌린 경우, likedPosts에 추가
       const post = data?.posts.find((p) => p.postId === postId);
       if (post) {
         setLikedPosts((prevPosts) => [...prevPosts, post]);
       }
     } else {
-      // 좋아요 취소된 경우, likedPosts에서 제거
       setLikedPosts((prevPosts) =>
         prevPosts.filter((p) => p.postId !== postId)
       );
@@ -92,25 +83,23 @@ const PostLike: React.FC<PostLike> = ({
   };
 
   useEffect(() => {
+    // selectedTab 변경 시 displayedPosts 업데이트
     if (selectedTab === 0) {
       setDisplayedPosts(data?.posts ?? null);
     } else if (selectedTab === 1) {
       setDisplayedPosts(data?.likedPosts);
     }
-  }, [data, likedPosts, selectedTab]);
+  }, [data, selectedTab]);
 
   useEffect(() => {
-    const updateIndicator = () => {
-      const element = document.querySelectorAll('.tab-button')[
-        selectedTab
-      ] as HTMLDivElement;
-      if (element) {
-        const { offsetWidth, offsetLeft } = element;
-        setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
-      }
-    };
-    updateIndicator();
-  }, [selectedTab]);
+    const element = document.querySelectorAll('.tab-button')[
+      selectedTab
+    ] as HTMLDivElement;
+    if (element) {
+      const { offsetWidth, offsetLeft } = element;
+      setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
+    }
+  }, []);
 
   const handleTabClick =
     (index: number) => (e: React.MouseEvent<HTMLDivElement>) => {
