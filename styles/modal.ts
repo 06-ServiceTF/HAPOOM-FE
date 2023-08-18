@@ -10,11 +10,12 @@ export const ModalBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 20;
 `;
 
 export const ModalContainer = styled.div`
-  width: 280px;
-  height: 150px;
+  /* width: 280px; */
+  /* height: 150px; */
   background-color: #fff;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -26,6 +27,7 @@ export const ModalContainer = styled.div`
 
   .modalTitle {
     font-size: 16px;
+    line-height: 1.4;
     text-align: center;
   }
 
@@ -55,7 +57,7 @@ export const WarningContainer = styled.div`
 export const ModalButtons = styled.div`
   display: flex;
   justify-content: center;
-  gap: 80px;
+  gap: 24px;
 `;
 
 export const CancelButton = styled.div`
