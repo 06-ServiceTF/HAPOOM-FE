@@ -16,6 +16,9 @@ const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 const makeStore: MakeStore<typeof store> = () => store;
 const wrapper = createWrapper(makeStore);
 
+const makeStore: MakeStore<typeof store> = () => store;
+const wrapper = createWrapper(makeStore);
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [notification, setNotification] = useState<string | null>(null);
   const [randomPosts, setRandomPosts] = useState(null);
