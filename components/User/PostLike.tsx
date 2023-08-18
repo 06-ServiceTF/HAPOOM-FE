@@ -63,14 +63,7 @@ const PostLike: React.FC<PostLike> = ({
   );
 
   const mutation = useMutation(likePost, {
-    onSuccess: (data, variables) => {
-      // const newPost = displayedPosts?.find(
-      //   (post) => post.postId.toString() === variables
-      // );
-      // if (newPost) {
-      //   setLikedPosts((prev) => [...prev, newPost]);
-      // }
-    },
+    onSuccess: (data, variables) => {},
     onError: (error) => {
       console.error('Failed to like the post', error);
     },
