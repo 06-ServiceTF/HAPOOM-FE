@@ -17,13 +17,13 @@ export const ModalContainer = styled.div`
   /* width: 280px; */
   /* height: 150px; */
   background-color: #fff;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 24px 16px;
   box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 32px;
 
   .modalTitle {
     font-size: 16px;
