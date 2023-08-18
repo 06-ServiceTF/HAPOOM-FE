@@ -9,6 +9,7 @@ const useSwipe = (leftAction: () => void, rightAction: () => void) => {
   const [endX, setEndX] = useState<number | null>(null);
 
   const dragDistance = endX !== null && startX !== null ? endX - startX : 0;
+  console.log(dragDistance);
 
   const calculateDragDistance = useCallback(() => {
     if (dragDistance > 50) {
