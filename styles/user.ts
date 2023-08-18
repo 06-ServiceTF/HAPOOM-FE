@@ -33,9 +33,9 @@ export const UserProfileCardBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px;
 
   @media screen and (max-width: 1260px) {
-    padding: 24px;
   }
 
   img {

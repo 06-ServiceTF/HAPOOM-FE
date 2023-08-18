@@ -44,25 +44,57 @@ const UserListItem: React.FC<User> = ({ userImage, nickname, email }) => {
 };
 
 const mockFollowers: User[] = [
-  // 여기에 팔로워 목 데이터를 추가하세요.
   {
     userId: 1,
     email: 'follower1@example.com',
-    nickname: 'Follower 1',
+    nickname: '되냐?',
     userImage: 'path_to_image1',
   },
-  // ... 다른 팔로워 데이터
+  {
+    userId: 2,
+    email: 'follower2@example.com',
+    nickname: '팔로우했냐?',
+    userImage: 'path_to_image2',
+  },
+  {
+    userId: 3,
+    email: 'follower3@example.com',
+    nickname: '팔로잉은했냐?',
+    userImage: 'path_to_image3',
+  },
+  {
+    userId: 4,
+    email: 'follower4@example.com',
+    nickname: '사진은찍었냐',
+    userImage: 'path_to_image4',
+  },
 ];
 
 const mockFollowings: User[] = [
-  // 여기에 팔로잉 목 데이터를 추가하세요.
   {
-    userId: 2,
+    userId: 5,
     email: 'following1@example.com',
-    nickname: 'Following 1',
+    nickname: '팔로잉이동외않되?',
     userImage: 'path_to_image2',
   },
-  // ... 다른 팔로잉 데이터
+  {
+    userId: 6,
+    email: 'following1@example.com',
+    nickname: '해줘이동',
+    userImage: 'path_to_image2',
+  },
+  {
+    userId: 7,
+    email: 'following1@example.com',
+    nickname: '돼라',
+    userImage: 'path_to_image2',
+  },
+  {
+    userId: 8,
+    email: 'following1@example.com',
+    nickname: '응안돼돌아가',
+    userImage: 'path_to_image2',
+  },
 ];
 
 const FollowTab: React.FC = () => {

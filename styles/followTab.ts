@@ -100,9 +100,9 @@ type TabUnderlineProps = {
   activeTab: 'followers' | 'followings';
 };
 
-export const TabUnderline = styled.div.attrs<TabUnderlineProps>((props) => ({
-  activeTab: props.activeTab,
-}))`
+export const TabUnderline = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'activeTab',
+})<TabUnderlineProps>`
   position: absolute;
   bottom: -2px;
   left: 0;
