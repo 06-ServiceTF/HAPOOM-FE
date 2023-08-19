@@ -11,9 +11,9 @@ import {
   UserListItemStyled,
   UserProfileImage,
 } from '@/styles/followTab';
+
 import React, { useState } from 'react';
 
-// 사용자 정보 타입
 interface User {
   userId: number;
   email: string;
@@ -97,7 +97,7 @@ const mockFollowings: User[] = [
   },
 ];
 
-const FollowTab: React.FC = () => {
+const FollowTab: React.FC<FollowTabProps> = () => {
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
     'followers'
   );
@@ -115,7 +115,7 @@ const FollowTab: React.FC = () => {
         <TabButton onClick={() => handleTabClick('followings')}>
           팔로잉
         </TabButton>
-        <TabUnderline activeTab={activeTab} /> {/* 이 부분을 추가합니다. */}
+        <TabUnderline activeTab={activeTab} /> {/* 이 부분을 수정합니다. */}
       </TabContainer>
 
       <UserList>
