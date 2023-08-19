@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { createWrapper, MakeStore } from 'next-redux-wrapper';
+import { createWrapper } from 'next-redux-wrapper';
 import store from '../redux/config/configStore';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -11,13 +11,7 @@ import Layout from '@/components/common/layout/Layout';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useRouter } from 'next/router';
 const queryClient = new QueryClient();
-const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
-
-const makeStore: MakeStore<typeof store> = () => store;
-const wrapper = createWrapper(makeStore);
-
-const makeStore: MakeStore<typeof store> = () => store;
-const wrapper = createWrapper(makeStore);
+const ENDPOINT = 'http://localhost:3001';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [notification, setNotification] = useState<string | null>(null);
@@ -120,5 +114,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+const wrapper = createWrapper(() => store);
 
 export default wrapper.withRedux(MyApp);
