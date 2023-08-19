@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Line,
   PostBox,
@@ -39,11 +39,14 @@ const Posts: React.FC<PostProps> = ({
   const [isLike, setIsLike] = useState<boolean>(false);
   const mutation = useMutation((postId: string) => likePost(postId));
 
-  const onLikeClickHandler = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    setIsLike(!isLike);
-    handleLikeClick(postId, !isLike);
-  };
+  const onLikeClickHandler = useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      setIsLike((prevIsLike) => !prevIsLike);
+      handleLikeClick(postId, !isLike);
+    },
+    [postId, isLike, handleLikeClick]
+  );
 
   return (
     <UserImageContainer onClick={onLikeClickHandler}>
@@ -79,7 +82,7 @@ const PostLike: React.FC<PostLike> = ({
   const handleLikeClick = (postId: number, isLiked: boolean) => {
     if (isLiked) {
       const post = data?.posts.find((p) => p.postId === postId);
-      if (post) {
+      if (post && !likedPosts.some((p) => p.postId === postId)) {
         setLikedPosts((prevPosts) => [...prevPosts, post]);
       }
     } else {
@@ -90,35 +93,29 @@ const PostLike: React.FC<PostLike> = ({
   };
 
   useEffect(() => {
-    // selectedTab 변경 시 displayedPosts 업데이트
     if (selectedTab === 0) {
       setDisplayedPosts(data?.posts ?? null);
     } else if (selectedTab === 1) {
       setDisplayedPosts(data?.likedPosts);
     }
-  }, [data, selectedTab]);
 
-  useEffect(() => {
-    const element = document.querySelectorAll('.tab-button')[
-      selectedTab
-    ] as HTMLDivElement;
-    if (element) {
-      const { offsetWidth, offsetLeft } = element;
-      setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
-    }
-  }, []);
+    setTimeout(() => {
+      const elements = document.querySelectorAll('.tab-button');
+      if (elements.length > selectedTab) {
+        const element = elements[selectedTab] as HTMLDivElement;
+        const { offsetWidth, offsetLeft } = element;
+        setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
+      }
+    }, 0);
+  }, [selectedTab, data]);
 
   const handleTabClick =
     (index: number) => (e: React.MouseEvent<HTMLDivElement>) => {
       const { offsetWidth, offsetLeft } = e.currentTarget;
       setSelectedTab(index);
       setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
-      if (index === 0) {
-        setDisplayedPosts(data?.posts ?? null);
-      } else if (index === 1) {
-        setDisplayedPosts(likedPosts);
-      }
     };
+
   return (
     <PostBox>
       <PostContentBox>

@@ -76,7 +76,10 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
-          <FollowButton />
+          <FollowButton
+            currentUserId={loggedInEmail || undefined}
+            profileUserId={userId}
+          />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>

@@ -1,24 +1,12 @@
 import Link from 'next/link';
 import { FollowBtn } from '@/styles/user';
 import React, { useState, useEffect } from 'react';
+import Modal from '../common/Modal';
 
 interface FollowButtonProps {
   currentUserId?: string;
   profileUserId?: string;
 }
-
-const ConfirmModal: React.FC<{
-  onClose: () => void;
-  onConfirm: () => void;
-}> = ({ onClose, onConfirm }) => {
-  return (
-    <div>
-      언팔로우 하시겠습니까?
-      <button onClick={onConfirm}>예</button>
-      <button onClick={onClose}>아니오</button>
-    </div>
-  );
-};
 
 const FollowButton: React.FC<FollowButtonProps> = ({
   currentUserId,
@@ -60,10 +48,14 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         </FollowBtn>
       )}
       {isModalOpen && (
-        <ConfirmModal
-          onClose={() => setIsModalOpen(false)}
-          onConfirm={handleConfirmUnfollow}
-        />
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={() => setIsModalOpen(false)}
+          actionText="예"
+          onClickEvent={handleConfirmUnfollow}
+        >
+          언팔로우 하시겠습니까?
+        </Modal>
       )}
     </>
   );

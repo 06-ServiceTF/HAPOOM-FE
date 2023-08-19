@@ -27,7 +27,7 @@ interface FollowTabProps {
 }
 
 interface TabUnderlineProps {
-  activeTab: 'followers' | 'followings';
+  $activeTab: 'followers' | 'followings';
 }
 
 const UserListItem: React.FC<User> = ({ userImage, nickname, email }) => {
@@ -97,7 +97,7 @@ const mockFollowings: User[] = [
   },
 ];
 
-const FollowTab: React.FC<FollowTabProps> = () => {
+const FollowTab: React.FC<FollowTabProps> = ({ followers, followings }) => {
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
     'followers'
   );
@@ -115,7 +115,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
         <TabButton onClick={() => handleTabClick('followings')}>
           팔로잉
         </TabButton>
-        <TabUnderline activeTab={activeTab} /> {/* 이 부분을 수정합니다. */}
+        <TabUnderline $activeTab={activeTab} />
       </TabContainer>
 
       <UserList>

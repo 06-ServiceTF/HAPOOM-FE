@@ -97,21 +97,17 @@ export const FollowButtonStyled = styled.button`
 `;
 
 type TabUnderlineProps = {
-  activeTab: 'followers' | 'followings';
+  $activeTab: 'followers' | 'followings';
 };
 
-export const TabUnderline = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== 'activeTab',
-})<TabUnderlineProps>`
+export const TabUnderline = styled.div<TabUnderlineProps>`
   position: absolute;
   bottom: -2px;
   left: 0;
   width: 50%;
   height: 3px;
   background-color: #2797ff;
-
   transition: transform 0.3s ease-in-out;
-
-  transform: ${(props) =>
-    props.activeTab === 'followers' ? 'translateX(0%)' : 'translateX(100%)'};
+  transform: ${({ $activeTab }) =>
+    $activeTab === 'followers' ? 'translateX(0%)' : 'translateX(100%)'};
 `;

@@ -281,3 +281,49 @@ export const SettingBtn = styled.div`
     }
   }
 `;
+
+export const ModalContainer = styled.div`
+  max-width: 420px;
+  width: 60%;
+  background-color: #fff;
+  padding: 10px 24px 16px;
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+
+  .modalTitle {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  span {
+    font-weight: 700;
+  }
+
+  button {
+    max-width: 160px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  button:hover {
+    background-color: #f5f5f5;
+  }
+
+  .confirmButton {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  .cancelButton {
+    background-color: #f44336;
+    color: white;
+  }
+`;
