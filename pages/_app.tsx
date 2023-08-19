@@ -11,7 +11,7 @@ import Layout from '@/components/common/layout/Layout';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useRouter } from 'next/router';
 const queryClient = new QueryClient();
-const ENDPOINT = 'http://localhost:3001';
+const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [notification, setNotification] = useState<string | null>(null);
