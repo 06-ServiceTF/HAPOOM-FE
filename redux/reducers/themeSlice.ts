@@ -1,21 +1,24 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type ThemeMode = 'light' | 'dark';
+type ThemeMode = "light" | "dark";
 
 interface ThemeState {
   mode: ThemeMode;
+  mainTextColor: string;
 }
 
-const initialState = {
-  mode: typeof window !== 'undefined' ? (localStorage.getItem('theme') || 'light') : 'light',
+const initialState: ThemeState = {
+  mode: typeof window !== "undefined" ? (localStorage.getItem("theme") as ThemeMode) || "light" : "light",
+  mainTextColor: typeof window !== "undefined" ? (localStorage.getItem("theme") === "dark" ? "#fff" : "#000") : "#000",
 };
 
 const themeSlice = createSlice({
-  name: 'theme',
+  name: "theme",
   initialState,
   reducers: {
-    setThemeAll: (state, action: PayloadAction<string>) => {
-      return { mode: action.payload };
+    setThemeAll: (state, action: PayloadAction<ThemeMode>) => {
+      state.mode = action.payload;
+      state.mainTextColor = action.payload === "dark" ? "#fff" : "#000";
     },
   },
 });
