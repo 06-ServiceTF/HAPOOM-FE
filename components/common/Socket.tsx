@@ -63,6 +63,10 @@ function SocketManager({
       dispatch(LOAD_POST(data));
     });
 
+    socket.on('latest-posts', (data) => {
+      dispatch(LOAD_POST(data));
+    });
+
     return () => {
       socket.disconnect();
     };
