@@ -16,7 +16,6 @@ import ProfileImage from '@/components/common/ProfileImage';
 import { useQuery, useQueryClient } from 'react-query';
 import Tabs from '@/components/common/Tabs';
 import { useAuth } from '@/hooks/useAuth';
-
 export interface User {
   userId: number;
   email: string;
@@ -156,6 +155,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
   return (
     <FollowContainer>
       <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
+
       <UserList>
         {Array.isArray(activeData) &&
           activeData.map((user) => (
