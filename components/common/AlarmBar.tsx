@@ -28,9 +28,7 @@ const AlarmBox = styled.div`
   gap: 4px;
   margin-bottom: 12px;
   transition: all 0.3s ease-in-out;
-  animation:
-    fadeIn 1s forwards ease-in-out,
-    fadeOut 1s forwards ease-in-out;
+  animation: fadeIn 1s forwards ease-in-out, fadeOut 1s forwards ease-in-out;
   animation-delay: 0s, 5s;
   &.fade-out {
     /* background-color: red; */
