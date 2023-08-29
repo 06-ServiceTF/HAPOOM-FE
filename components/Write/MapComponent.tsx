@@ -15,7 +15,14 @@ import nookies from 'nookies';
 import Modal from '../common/Modal';
 import useModal from '@/hooks/useModal';
 import { Mappin } from '../common/SVG';
-import { InputContainer } from '@/styles/detail';
+import {
+  CustomSelect,
+  DropdownIcon,
+  InputContainer,
+  OptionItem,
+  OptionsContainer,
+  SelectContainer,
+} from '@/styles/detail';
 
 const SuggestionsBox = styled.ul`
   list-style-type: none;
@@ -108,6 +115,8 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const mapContainerRef = useRef(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
+  const [query, setQuery] = useState('');
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
@@ -276,6 +285,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     );
   }, [setMapOpen]);
 
+  const toggleOptions = () => {
+    setIsOptionsOpen((prev) => !prev);
+  };
+
   return (
     <>
       {isModalOpen && (
@@ -295,20 +308,26 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         onReady={() => initializeMap()}
       />
       <h3 style={{ margin: '10px 0' }}>장소</h3>
-      <InputContainer>
-        <label>
+      <InputContainer style={{ position: 'relative' }}>
+        {/* <label>
           <Mappin />
-        </label>
+        </label> */}
         <InputBox
           type="text"
-          placeholder="장소를 입력해주세요"
-          value={locationInput}
-          onChange={(e) => setLocationInput(e.target.value)}
-          onKeyUp={handleKeyUp}
-          style={{
-            paddingLeft: '32px',
-          }}
+          placeholder="검색어를 입력해주세요"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          style={{ paddingLeft: '120px', paddingRight: '100px' }}
         />
+        <SelectContainer>
+          <CustomSelect onClick={toggleOptions}>주소</CustomSelect>
+          <DropdownIcon onClick={toggleOptions}>▼</DropdownIcon>
+          {isOptionsOpen && (
+            <OptionsContainer>
+              <OptionItem>도로명 / 지번</OptionItem>
+            </OptionsContainer>
+          )}
+        </SelectContainer>
       </InputContainer>
       <div
         style={{
