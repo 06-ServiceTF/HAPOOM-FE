@@ -8,8 +8,16 @@ interface ThemeState {
 }
 
 const initialState: ThemeState = {
-  mode: typeof window !== 'undefined' ? (localStorage.getItem('theme') as ThemeMode || 'light') : 'light',
-  mainTextColor: typeof window !== 'undefined' ? (localStorage.getItem('theme') === 'dark' ? '#fff' : '#000') : '#000',
+  mode:
+    typeof window !== 'undefined'
+      ? (localStorage.getItem('theme') as ThemeMode) || 'light'
+      : 'light',
+  mainTextColor:
+    typeof window !== 'undefined'
+      ? localStorage.getItem('theme') === 'dark'
+        ? '#fff'
+        : '#000'
+      : '#000',
 };
 
 const themeSlice = createSlice({
