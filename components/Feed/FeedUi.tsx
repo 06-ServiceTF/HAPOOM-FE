@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { FeedSection } from '../../styles/feed';
-import { useInfiniteQuery, useMutation } from 'react-query';
-import { reportPost } from '@/api/post';
-import Modal from '../common/Modal';
-import { InView, useInView } from 'react-intersection-observer';
-import FeedPost from './FeedPost';
+import React, { useCallback, useEffect, useState } from "react";
+import { FeedSection } from "../../styles/feed";
+import { useInfiniteQuery, useMutation } from "react-query";
+import { reportPost } from "@/api/post";
+import Modal from "../common/Modal";
+import { InView, useInView } from "react-intersection-observer";
+import FeedPost from "./FeedPost";
 
 interface ModalMessage {
   actionText: string;
@@ -31,38 +31,32 @@ interface Feed {
 const FeedUi = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<ModalMessage>({
-    actionText: '',
-    modalMessge: '',
-    onClickEvent: '',
+    actionText: "",
+    modalMessge: "",
+    onClickEvent: "",
   });
   const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
   const [ref, inView] = useInView();
 
   const getFeed = async ({ pageParam }: { pageParam: number }) => {
-    return fetch(
-      `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed?page=${pageParam}`
-    ).then((res) => res.json());
+    return fetch(`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed?page=${pageParam}`).then((res) => res.json());
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-  } = useInfiniteQuery('feed', ({ pageParam = 1 }) => getFeed({ pageParam }), {
-    getNextPageParam: (lastPage, pages) => {
-      console.log('Inside getNextPageParam', lastPage, pages);
-      return lastPage.nextPage;
-    },
-  });
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfiniteQuery(
+    "feed",
+    ({ pageParam = 1 }) => getFeed({ pageParam }),
+    {
+      getNextPageParam: (lastPage, pages) => {
+        console.log("Inside getNextPageParam", lastPage, pages);
+        return lastPage.nextPage;
+      },
+    }
+  );
 
-  console.log('feeddata', data);
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
-        actionText: '확인',
+        actionText: "확인",
         modalMessge: message,
         onClickEvent: null,
       });
@@ -70,21 +64,34 @@ const FeedUi = () => {
     },
   });
 
-  const handleReportClick = (id: any) => {
-    setModalMessge({
-      actionText: '신고',
-      modalMessge: '해당 사용자를 신고하시겠습니까?',
-      onClickEvent: () => report(id),
-    });
-    setIsModalOpen(true);
-  };
+  const handleReportClick = useCallback(
+    (id: any) => {
+      setModalMessge({
+        actionText: "신고",
+        modalMessge: "해당 사용자를 신고하시겠습니까?",
+        onClickEvent: () => report(id),
+      });
+      setIsModalOpen(true);
+    },
+    [report]
+  );
 
-  const toggleExpanded = (postId: number) => {
+  const toggleExpanded = useCallback((postId: number) => {
     setExpandedPosts((prevState: ExpandedPosts) => ({
       ...prevState,
       [postId]: !prevState[postId],
     }));
-  };
+  }, []);
+
+  const handleFetchMore = useCallback(() => {
+    // 현재 스크롤 위치를 저장
+    const currentScrollY = window.scrollY;
+
+    fetchNextPage().then(() => {
+      // 데이터를 불러온 후 스크롤 위치를 원래대로 되돌림
+      window.scrollTo(0, currentScrollY);
+    });
+  }, [fetchNextPage]);
 
   if (isFetching || isFetchingNextPage) {
     return <div>로딩 중...</div>;
@@ -93,6 +100,7 @@ const FeedUi = () => {
   if (error) {
     return <div>에러가 발생했습니다</div>;
   }
+
   return (
     <FeedSection>
       <Modal
@@ -105,6 +113,7 @@ const FeedUi = () => {
       </Modal>
       {data?.pages
         .flatMap((page) => page.feed)
+
         .map((feed: Feed) => (
           <FeedPost
             key={feed.postId}
@@ -114,13 +123,14 @@ const FeedUi = () => {
             isExpanded={expandedPosts[feed.postId]}
           />
         ))}
+
       {hasNextPage && (
         <InView
           as="div"
           onChange={(inView, entry) => {
-            if (inView) fetchNextPage();
+            if (inView) handleFetchMore();
           }}
-          style={{ height: '200px', opacity: 0 }}
+          style={{ height: "200px", opacity: 0 }}
         />
       )}
     </FeedSection>
