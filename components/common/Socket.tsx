@@ -1,13 +1,9 @@
-import { RootState } from '@/redux/config/configStore';
-import {
-  ADD_NOTIFICATION,
-  CLEAR_NOTIFICATION,
-  LOAD_POST,
-} from '@/redux/reducers/notificationSlice';
-import { UserState } from '@/redux/reducers/userSlice';
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import socketIOClient from 'socket.io-client';
+import { RootState } from "@/redux/config/configStore";
+import { ADD_NOTIFICATION, CLEAR_NOTIFICATION, LOAD_POST } from "@/redux/reducers/notificationSlice";
+import { UserState } from "@/redux/reducers/userSlice";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import socketIOClient from "socket.io-client";
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
@@ -16,13 +12,8 @@ interface SocketManagerProps {
   setRandomPosts: React.Dispatch<React.SetStateAction<any[] | null>>;
 }
 
-function SocketManager({
-  setNotification,
-  setRandomPosts,
-}: SocketManagerProps) {
-  const { user }: { user: UserState['user'] } = useSelector(
-    (state: RootState) => state.user
-  );
+function SocketManager({ setNotification, setRandomPosts }: SocketManagerProps) {
+  const { user }: { user: UserState["user"] } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   // console.log('소켓 컴포넌트');
 
@@ -30,33 +21,33 @@ function SocketManager({
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     // push가 true인 경우에만 소켓 이벤트를 수신
-    console.log('푸시 설정 ON');
+    console.log("푸시 설정 ON");
 
-    socket.on('notify-post', (data) => {
+    socket.on("notify-post", (data) => {
       if (user.push) setNotification(data.message);
     });
 
-    socket.on('loginSuccess', (data) => {
+    socket.on("loginSuccess", (data) => {
       const { email, nickname } = data;
-      if (user.push)
-        setNotification(
-          `User ${nickname} with email ${email} logged in successfully.`
-        );
-
+      if (user.push) setNotification(`User ${nickname} with email ${email} logged in successfully.`);
+      dispatch(ADD_NOTIFICATION(`${nickname}님이 로그인 하셨습니다.`));
       setTimeout(() => {
+        dispatch(CLEAR_NOTIFICATION());
+
         setNotification(null);
       }, 5000);
     });
 
-    socket.on('random-posts', (posts) => {
+    socket.on("random-posts", (posts) => {
       if (user.push) setRandomPosts(posts);
     });
 
-    socket.on('newPost', () => {
+    socket.on("newPost", () => {
       if (user.push) setNotification(`새 글이 등록 되었습니다.`);
+      dispatch(ADD_NOTIFICATION(`새 글이 등록 되었습니다.`));
     });
 
-    socket.on('latest-posts', (data) => {
+    socket.on("latest-posts", (data) => {
       dispatch(LOAD_POST(data));
     });
 
