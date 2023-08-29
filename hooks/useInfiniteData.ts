@@ -6,7 +6,6 @@ export const useInfiniteData = (
   type: 'post' | 'like' | 'feed',
   enabled = true
 ) => {
-
   const fetchFunction = async ({ pageParam = 1 }) => {
     console.log('pageParam:', pageParam);
     const method = 'GET';
@@ -43,7 +42,7 @@ export const useInfiniteData = (
 
       if (
         window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 500
+        document.body.offsetHeight - 300
       ) {
         if (hasNextPage && !isFetchingNextPage) {
           fetchNextPage();
