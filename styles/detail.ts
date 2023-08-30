@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalFonts = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
@@ -42,7 +42,7 @@ type DetialContentSectionProps = {
   $marginTop?: string;
 };
 export const DetialContentSection = styled.section<DetialContentSectionProps>`
-  margin-top: ${(props) => (props.$marginTop ? props.$marginTop : '36px')};
+  margin-top: ${(props) => (props.$marginTop ? props.$marginTop : "36px")};
   h3 {
     width: 100%;
     padding-bottom: 8px;
@@ -50,7 +50,7 @@ export const DetialContentSection = styled.section<DetialContentSectionProps>`
     font-size: 16px;
     line-height: 16px;
     &::after {
-      content: '';
+      content: "";
       display: block;
       position: relative;
       bottom: -10px;
@@ -173,7 +173,7 @@ export const LimitNumBox = styled.span<limitProps>`
   position: absolute;
   bottom: 5px;
   right: 10px;
-  color: ${(props) => (props.$color ? '#FF5D5D' : '#334765')};
+  color: ${(props) => (props.$color ? "#FF5D5D" : "#334765")};
 `;
 // comment components style
 export const CommentsContainer = styled.div`
@@ -296,63 +296,5 @@ export const InputContainer = styled.div`
     position: absolute;
     top: calc(50% - 9px);
     left: 13px;
-  }
-`;
-
-export const SelectContainer = styled.div`
-  top: 4px;
-  left: 4px;
-  position: absolute;
-  width: 30%;
-`;
-
-export const CustomSelect = styled.div`
-  padding: 7px 12px 10px;
-  width: 100%;
-  height: 35px;
-  border-radius: 10px;
-  color: #fff;
-  background-color: #5aabf6;
-  position: relative;
-  &:hover {
-    background-color: #0988ff;
-  }
-`;
-
-export const DropdownIcon = styled.span`
-  font-size: 5px;
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  color: #fff;
-  transform: translateY(-50%);
-  cursor: pointer;
-`;
-
-export const OptionsContainer = styled.div`
-  width: 100%;
-  height: 35px;
-  position: absolute;
-  top: 100%; /* 드롭다운 옵션을 아래로 내림 */
-  left: 0;
-  right: 0;
-  background-color: #5aabf6;
-  color: #fff;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1;
-  border-radius: 10px;
-  transition: all 0.3s ease-in-out;
-`;
-
-export const OptionItem = styled.div`
-  padding: 7px 12px 10px;
-  height: 35px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0988ff;
-    border-radius: 10px;
   }
 `;
