@@ -117,6 +117,8 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const markerRef = useRef<Marker | null>(null);
   const [query, setQuery] = useState('');
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const options = ['주소', '키워드'];
+  const [selectedOption, setSelectedOption] = useState(options[0]);
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
@@ -289,6 +291,11 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     setIsOptionsOpen((prev) => !prev);
   };
 
+  const handleOptionChange = (option: string) => {
+    setSelectedOption(option);
+    toggleOptions();
+  };
+
   return (
     <>
       {isModalOpen && (
@@ -317,14 +324,24 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           placeholder="검색어를 입력해주세요"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          style={{ paddingLeft: '120px', paddingRight: '100px' }}
+          style={{ paddingLeft: '95px', paddingRight: '100px' }}
         />
         <SelectContainer>
-          <CustomSelect onClick={toggleOptions}>주소</CustomSelect>
+          <CustomSelect onClick={toggleOptions}>{selectedOption}</CustomSelect>
           <DropdownIcon onClick={toggleOptions}>▼</DropdownIcon>
           {isOptionsOpen && (
             <OptionsContainer>
-              <OptionItem>도로명 / 지번</OptionItem>
+              {options.map(
+                (option) =>
+                  option !== selectedOption && ( // 현재 선택된 옵션은 리스트에 나타나지 않게
+                    <OptionItem
+                      key={option}
+                      onClick={() => handleOptionChange(option)}
+                    >
+                      {option}
+                    </OptionItem>
+                  )
+              )}
             </OptionsContainer>
           )}
         </SelectContainer>

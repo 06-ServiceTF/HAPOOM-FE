@@ -303,7 +303,7 @@ export const SelectContainer = styled.div`
   top: 4px;
   left: 4px;
   position: absolute;
-  width: 30%;
+  width: 22%;
 `;
 
 export const CustomSelect = styled.div`
