@@ -1,52 +1,49 @@
-import Image from 'next/image';
-import React from 'react';
+import Image from "next/image";
+import React from "react";
 import {
   ButtonTouchBox,
   MainBannerBox,
   MainBannerContainer,
   MainCardInfo,
   NewContentBox,
+  ProfileLink,
   RandomContentContainer,
   RandomText,
-} from '@/styles/home';
-import { ArrowLong } from '../common/SVG';
-import ProfileImage from '../common/ProfileImage';
-import HeartIcon from '../common/HeartIcon';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/config/configStore';
-const MainBanner = ({
-  data,
-  $isClick,
-  randomPosts,
-  onClickBottomNavHandler,
-}: any) => {
-  const randomPost = useSelector((state: RootState) => state.notification.post);
+} from "@/styles/home";
+import { ArrowLong } from "../common/SVG";
+import ProfileImage from "../common/ProfileImage";
+import HeartIcon from "../common/HeartIcon";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/config/configStore";
+import Link from "next/link";
 
+const MainBanner = ({ data, $isClick, randomPosts, onClickBottomNavHandler }: any) => {
+  const randomPost = useSelector((state: RootState) => state.notification.post);
+  console.log(randomPost);
   return (
     <MainBannerContainer $isClick={$isClick}>
       <RandomContentContainer $isClick={$isClick}>
         <NewContentBox>
-          <figure>
-            <Image
-              src={randomPost?.images}
-              alt="random user image"
-              width={768}
-              height={800}
-              loading="eager"
-              priority={true}
-            />
-          </figure>
+          <Link href={`/detail/${randomPost?.post.postId}`}>
+            <figure>
+              <Image
+                src={randomPost?.images[0].url}
+                alt="random user image"
+                width={768}
+                height={800}
+                loading="eager"
+                priority={true}
+              />
+            </figure>
+          </Link>
           <MainCardInfo>
-            <ProfileImage
-              userImage={randomPost?.user?.userImage}
-              preset={randomPost?.user.preset}
-            />
-            <p>
-              <span className="nickname-hightlight">
-                {randomPost?.user.nickname}
-              </span>
-              님이 품은 하늘입니다
-            </p>
+            <ProfileLink href={`/User/${randomPost?.post.userId}`}>
+              <ProfileImage userImage={randomPost?.user?.userImage} preset={randomPost?.user.preset} />
+              <p>
+                <span className="nickname-hightlight">{randomPost?.user.nickname}</span>
+                님이 품은 하늘입니다
+              </p>
+            </ProfileLink>
             <HeartIcon postId={randomPost?.post.postId} />
           </MainCardInfo>
         </NewContentBox>
@@ -62,7 +59,7 @@ const MainBanner = ({
         {/* {randomPosts && ( */}
         {$isClick ? (
           <RandomText $isClick={$isClick}>
-            랜덤글
+            수고했어 오늘도
             {randomPosts && randomPosts[0].content1}
             <span>{randomPosts && randomPosts[0].content2}</span>
           </RandomText>
