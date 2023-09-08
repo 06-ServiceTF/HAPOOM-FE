@@ -1,3 +1,27 @@
+// {
+//   "compilerOptions": {
+//     "target": "es5",
+//     "lib": ["dom", "dom.iterable", "esnext"],
+//     "allowJs": true,
+//     "skipLibCheck": true,
+//     "strict": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "noEmit": true,
+//     "esModuleInterop": true,
+//     "module": "esnext",
+//     "moduleResolution": "bundler",
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "jsx": "preserve",
+//     "incremental": true,
+//     "paths": {
+//       "@/*": ["./*"]
+//     },
+//     "types": ["jest", "node","@testing-library/jest-dom"],
+//   },
+//   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types/*.d.ts", "public/sw.js"],
+//   "exclude": ["node_modules"]
+// }
 {
   "compilerOptions": {
     "target": "es5",
@@ -16,8 +40,16 @@
     "incremental": true,
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["jest", "node", "@testing-library/jest-dom"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types/*.d.ts", "public/sw.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "types/*.d.ts",
+    "public/sw.js",
+    "jest.setup.js"
+  ],
   "exclude": ["node_modules"]
 }

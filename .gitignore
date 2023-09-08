@@ -40,7 +40,7 @@ examples/**/pnpm-lock.yaml
 # production
 /build
 /docs
-/test
+# /test
 # misc
 .DS_Store
 *.pem
@@ -67,4 +67,4 @@ package-lock.json
 jest.config.js
 jest.setup.js
 __mocks__/
-test/
+# test/
